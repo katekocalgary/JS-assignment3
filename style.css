@@ -132,7 +132,7 @@ SEARCH
   width : 90%;
   height: 700px;
   max-width: 1050px;
-  top: 75%;
+  top: 500px;
   left: 50%;
   transition: transform 0.28s ease-in-out; 
   transform: translate(-50%, -50%);
