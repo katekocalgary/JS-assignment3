@@ -3,12 +3,12 @@ const status = document.querySelector('#form-status')
 const keyword = document.querySelector('#keyword')
 const submit = document.querySelector('#submit')
 const searchResult = document.querySelector(".searchResult")
+const layerClose = document.querySelector("#layer-close");
 const communityTitle = document.querySelector(".communityTitle")
 const searchList1 = document.querySelector(".searchList1")
 const searchList2 = document.querySelector(".searchList2")
+const resultLi= document.getElementsByClassName("resultLi").textContent
 
-
-// const resultLi = document.getElementsByClassName("resultLi").textContent
 
 const list = document.querySelector(".list")
 const total = document.querySelector(".total")
@@ -30,10 +30,6 @@ const api = {
 
 // 1. Search click event
 
-  function clear(className) {
-    document.getElementsByClassName(className).textContent = "";
-  }
-
   submit.addEventListener('click', x => {
     
     x.preventDefault()
@@ -47,12 +43,16 @@ const api = {
 
     else{ 
       keyword.setAttribute("style","border-color: black;")
+      const del = document.getElementById("keyword")
+      del.value=""
 
+      
         // const del=document.querySelector(".searchResult")
         // del.innerHTML=""
-     
+
+
       const comValue = value.toUpperCase()
-      status.textContent = "Here is " + comValue + " crime dashboard"
+      status.textContent = ""
       communityTitle.textContent = comValue
       
       const searchUrl= api.searchUrl(comValue)
@@ -62,7 +62,11 @@ const api = {
       
   })
 
+
+
   // 2. Search result show
+
+ 
   function comDataFetch(searchUrl){
 
     // 5. Function - add line community crime info
@@ -74,6 +78,7 @@ const api = {
       element.setAttribute("class","resultLi")
       element.textContent = string
       x.appendChild(element)
+      return
     }
 
     // 4. Fetch - Summary of community crime information
@@ -110,6 +115,8 @@ const api = {
         else {
           addLine("- Resident counts : " + residentData,searchList1) 
         }
+
+        
       // Category crime count 
       const categoryTotals = x
         .reduce(function(r,o){
@@ -126,10 +133,43 @@ const api = {
         for (var i=0 ; i < categoryList.length ; i++){
           const categoryListEach = categoryList[i]
           addLine((i+1)+". "+categoryListEach[0] + " : " + categoryListEach[1],searchList2)
-        }
-    } 
-    
 
+        //Google Pie chart API
+          // google.charts.load('current', {'packages':['corechart']});
+          // google.charts.setOnLoadCallback(drawChart);
+          
+          // drawchart(categoryListEach)
+
+          // function drawChart(x) {
+  
+          //   var data = google.visualization.arrayToDataTable([
+          //     ['category', 'counts'],
+          //     ['Eat',      2],
+          //     ['Commute',  2],
+          //     ['Watch TV', 2],
+          //     ['Sleep',    7]
+          //   ]);
+    
+          //   var options = {
+          //     title: 'Crime counts by category'
+          //   };
+    
+          //   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    
+          //   chart.draw(data, options);
+          // }
+
+
+        }
+
+    } 
+
+    // Result layer close event
+    layerClose.addEventListener("click", function(){
+    searchResult.setAttribute("id","") 
+    location.reload();
+    })
+            
     // 3. fetch search url
     fetch (searchUrl)
     .then (x => {
