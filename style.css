@@ -230,6 +230,7 @@ TOTAL & TOPS
   box-shadow: 2px 8px 9px 0px rgba(0, 0, 0, 0.14),
       11px 11px 6px rgba(0, 0, 0, 0.05);
   color: white;
+  font-size: 0.8em;
 }
 
 #box1 {
